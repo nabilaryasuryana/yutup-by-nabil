@@ -35,7 +35,7 @@ if (isset($_SESSION['username']) === 0 || isset($_SESSION['username']) === null 
                 if ($user !== "guest") {
                     echo '<button class="h-8 w-8 me-2" type="button" id="menubtn"><img src="' . asset('images/logo.png') . '"></button>';
                 } else {
-                    echo '<a href="/login" class="px-2 py-1 text-blue-700 rounded border border-blue-700 me-2">Login</a>';
+                    echo '<a href="/Login" class="px-2 py-1 text-blue-700 rounded border border-blue-700 me-2">Login</a>';
                 }
                 ?>
             </div>            
