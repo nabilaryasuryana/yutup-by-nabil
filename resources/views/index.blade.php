@@ -19,61 +19,37 @@ if (isset($_SESSION['username']) === 0 || isset($_SESSION['username']) === null 
         <link rel="icon" type="image/x-icon" href="{{ asset('images/logo.png') }}">
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Itim&display=swap">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-        @vite('resources/css/app.css')
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.8.1/flowbite.min.css" rel="stylesheet" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+        @vite(['resources/css/app.css','resources/js/app.js'])
   </head>
     </head>
     <body>
-        <nav class="navbar navbar-expand-lg bg-body-tertiary itim">
-            <div class="container-fluid itim">
-                <a class="navbar-brand itim flex-grow-1" href="#">
-                <img src="{{ asset('images/logo.png') }}" alt="" width="30" height="30">
-                    Yutup
-                </a>
-                <button class="navbar-toggler ms-5" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <form class="d-flex" role="search">
-                    <div class="input-group">
-                        <input type="Search" class="form-control rounded-start-5" placeholder="Search" aria-label="Search" aria-describedby="button-addon2">
-                        <button class="btn btn-outline-secondary rounded-end-5" type="button" id="button-addon2">Search</button>
-                    </div>
-                </form>
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        
-                    </li>
-                    <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Dropdown
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Action</a></li>
-                        <li><a class="dropdown-item" href="#">Another action</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="#">Something else here</a></li>
-                    </ul>
-                    </li>
-                </ul>
-                    <div class="nav-item">
-                        <?php 
-                        if ($user == "guest") {
-                            echo '<a class="btn btn-outline-primary" href="#">Login</a>';
-                        } elseif ($user == $_SESSION['username']) {
-                            echo '<a class="nav-link" href="#">My Channel</a>';
-                        }
-                        ?>
-                    </div>
-                </div>
+        <nav class="h-12 lg:h-12 bg-slate-300 w-screen shadow-md flex items-center itim fixed">
+            <div class="flex items-center">
+                <img src="{{ asset('images/logo.png')}}" alt="" class="icon h-8 w-8 ml-2">
+                <h1 class="title text-2xl text-center ml-2">Yutup</h1>
             </div>
+            <div class="h-8 mt-2 ml-auto">
+                <?php
+                if ($user !== "guest") {
+                    echo '<button class="h-8 w-8 me-2" type="button" id="menubtn"><img src="' . asset('images/logo.png') . '"></button>';
+                } else {
+                    echo '<a href="/login" class="px-2 py-1 text-blue-700 rounded border border-blue-700 me-2">Login</a>';
+                }
+                ?>
+            </div>            
         </nav>
-        
+        <div id="menucontainer" class="w-screen h-screen right-0 top-0 hidden lg:hidden lg:w-2/6 lg:h-1/2 p-4 bg-white lg:border lg:border-black lg:rounded absolute lg:right-5 lg:top-5">
+            <div class="menu-content flex flex-col justify-center items-center relative">
+                <button class="w-5 h-5 flex justify-end absolute top-0 right-0" id="menuclose"><i class="fas fa-times"></i></button>
+                <div class="align-center justify-center">
+                    <img src="{{ asset('images/logo.png') }}" class="w-16 h-16 align-middle">
+                    <h2 class="align-middle text-center font-semibold itim"><?= $user?></h2>
+                </div> 
+            </div>
+        </div>              
         <script src="{{ asset('js/app.js') }}" async defer></script>
-        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.8.1/flowbite.min.js"></script>
     </body>
 </html>
