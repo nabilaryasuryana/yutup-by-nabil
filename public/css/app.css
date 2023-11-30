@@ -2,6 +2,36 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: itim;
+  src: url("../fonts/Itim-Regular.ttf");
+}
+
+
 .itim {
     font-family: itim;
+}
+
+.bg-login {
+  background-image: url("../images/screen2.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+}
+
+.bg-dashboard {
+  background-image: url("../images/screen1.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+}
+
+.bg-home {
+  background-image: url("../images/screen3.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
 }
