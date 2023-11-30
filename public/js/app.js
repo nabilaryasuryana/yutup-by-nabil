@@ -19,9 +19,11 @@ function toggleSidebar(context) {
     ) {
         context.classList.remove("hidden");
         context.classList.remove("lg:hidden");
+        context.classList.add("w-0");
     } else {
         context.classList.add("hidden");
         context.classList.add("lg:hidden");
+        context.classList.add("w-0");
     }
 }
 

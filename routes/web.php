@@ -24,6 +24,18 @@ use App\Http\Controllers\HomeController;
 */
 
 Route::get('/', [HomeController::class, 'index']);
+Route::get('/Profile', function () {
+return view('profile');
+});
+Route::get('/School', function () {
+return view('school');
+});
+Route::get('/About', function () {
+return view('about');
+});
+Route::get('/RPL', function () {
+return view('rpl');
+});
 
 Route::get('/Login', [LoginController::class, 'index'])->name('login')->middleware('guest');
 Route::post('/Login', [LoginController::class, 'authenticate']);
@@ -37,12 +49,15 @@ Route::get('/TambahUser', [TambahUserController::class, 'index'])->middleware('a
 Route::post('/TambahUser', [TambahUserController::class, 'Tambah']);
 
 Route::get('/Dashboard', [DashboardController::class, 'index'])->middleware('auth')->name('index');
+Route::get('/Dashboard/Product', [DashboardController::class, 'indexProduk'])->middleware('auth')->name('index');
 Route::get('/Dashboard/{q}', [UserController::class, 'query'])->middleware('auth');
 Route::get('/Search/{q}', [UsersController::class, 'query'])->name('search');
 
 Route::get('/EditDisable/{id}', [EditController::class, 'FiturDisabled'])->middleware('auth')->name('editDisabled');
 Route::get('/Edit/{id}', [EditController::class, 'index'])->middleware('auth')->name('editpage');
 Route::post('/Edit/{id}', [EditController::class, 'edit'])->name('edit');
+Route::post('/Edit/Product/{id}', [EditController::class, 'edit'])->name('editpageProduk');
 Route::get('/Delete/{id}', [EditController::class, 'destroy'])->name('delete');
+Route::get('/Delete/Product/{id}', [EditController::class, 'destroyProduct'])->name('deleteProduk');
 
 Route::post('/upload', [ProductController::class, 'upload'])->name('upload');

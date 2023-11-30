@@ -1,10 +1,21 @@
 <!-- resources/views/home.blade.php -->
 @extends('layouts.main')
 
-@section('title', 'Dashboard || {{ auth()->user()->name }}')
+@section('title', 'Dashboard || ' . auth()->user()->name)
+
+@section('breadscrumb')
+    <li aria-current="page">
+        <div class="flex items-center">
+        <svg class="rtl:rotate-180 w-3 h-3 text-gray-400 mx-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
+        </svg>
+        <a href="/Dashboard"></a><span class="ms-1 text-sm font-medium text-gray-500 md:ms-2 dark:text-gray-400">Dashboard</span>
+        </div>
+    </li>
+@endsection
 
 @section('content')
-        <h2 class="text-center text-2xl mb-5 ms-0">
+        <h2 class="text-center text-2xl mb-5 itim ms-0">
             Selamat datang {{ auth()->user()->name }} di halaman Dashboard admin
         </h2>
         <!-- <form action="/Logout" class="" method="post">
@@ -42,7 +53,7 @@
             </div>
         </form>
         @if ($data !== null)
-            <div id="table-container" class="itim">
+            <div id="table-container" class="itim max-h-96 overflow-x-hidden mb-3">
                 <table
                     width="100%"
                     class="border-lg border-black mb-10 mx-0 max-h-3xl h-2 mr-2 overflow-scroll itim"
@@ -116,6 +127,7 @@
                 </table>
             </div>
         @endif
+        
 
         @if(session()->has('success'))
         <div id="success" class="w-auto rounded-xl min-w-fit px-5 py-2 grid grid-flow-row-dense justify-center align-middle self-center mx-auto bg-opacity-90 bg-green-700">
@@ -135,6 +147,7 @@
             </script> -->
         </div>
         @endif 
+        
         @if(session()->has('error'))
         <div id="error" class="w-auto rounded-xl min-w-fit px-5 py-2 grid grid-flow-row-dense justify-center align-middle self-center mx-auto bg-opacity-90 bg-red-700">
             <p class="itim">{{ session('error')}}</p>
@@ -183,4 +196,5 @@
                 xhr.send();
             });
         </script>
+        <a href="/TambahUser" class="absolute right-3 p-2 rounded-lg bg-blue-700 bottom-24"><span class="material-icons">add</span></a>
 @endsection

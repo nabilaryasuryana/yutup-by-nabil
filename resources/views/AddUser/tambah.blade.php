@@ -17,9 +17,9 @@
     </head>
     <body class="bg-login">
         <div class="h-2/3 w-1/3 rounded p-2 mt-2 itim align-middle justify-center bg-white border border-blue-500 focus:shadow-lg grid focus:shadow-blue-400 m-auto">
-            <img src="{{ asset('images/logo.png')}}" alt="" class="lg:w-52 md:w-32 justify-center self-center mx-auto sm:w-20 w-20">
+            <img src="{{ asset('images/logo.png')}}" alt="" class="lg:w-24 md:w-24 justify-center self-center mx-auto sm:w-20 w-20">
             <p class="text-center my-3 font-extrabold text-2xl">Tambah User</p>
-            <form action="/TambahUser" method="post" onsubmit="return konfirmasi('Yakin ingin menambahkan user?')" onreset="return konfirmasi('Yakin ingin mereset data?')">
+            <form action="/TambahUser" method="post" enctype="multipart/form-data" onsubmit="return konfirmasi('Yakin ingin menambahkan user?')" onreset="return konfirmasi('Yakin ingin mereset data?')">
                 @csrf
                 <div class="input-group mx-">
                     <div class="row">
@@ -45,6 +45,20 @@
                         </select>
                     </div>
                     <div class="row">
+                        <div class="flex items-center justify-center w-full">
+                            <label for="dropzone-file" class="flex flex-col items-center justify-center w-full h-full border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+                                <div id="image-container" class="flex flex-col items-center justify-center pt-5 pb-6">
+                                    <svg class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
+                                    </svg>
+                                    <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">Click to upload</span> or drag and drop</p>
+                                    <p class="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF.</p>
+                                </div>
+                                <input id="dropzone-file" type="file" name="profile_image" accept="image/*" class="hidden" />
+                            </label>
+                        </div> 
+                    </div>
+                    <div class="row">
                         <input type="text" name="username" placeholder="Username ..." class="@error('username') invalid:border-red-700 @enderror border-gray-500 w-full mb-3 p-2 rounded-3xl transition-all hover:border-blue-600 focus:border-blue-700" required>
                     </div>
                     <div class="row">
@@ -63,6 +77,39 @@
                 </div>
             </form>
         </div>
+        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
         <script src="{{ asset('js/app.js') }}" async defer></script>
+        <script>
+            $(document).ready(function() {
+                // Menangani perubahan pada input file
+                $("#dropzone-file").change(function() {
+                    previewImage(this);
+                });
+            });
+    
+            function previewImage(input) {
+                // Menghapus isi di dalam elemen dengan ID image-container
+                $("#image-container").empty();
+    
+                // Memeriksa apakah input memiliki file yang dipilih
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+    
+                    reader.onload = function(e) {
+                        // Buat elemen <img> baru
+                        var imgElement = $("<img>")
+                            .attr("src", e.target.result)
+                            .attr("alt", "Image Preview")
+                            .addClass("max-h-24");
+    
+                        // Tambahkan elemen <img> ke dalam elemen dengan ID image-container
+                        $("#image-container").append(imgElement);
+                    };
+    
+                    // Membaca data gambar sebagai URL data
+                    reader.readAsDataURL(input.files[0]);
+                }
+            }
+        </script>
     </body>
 </html>

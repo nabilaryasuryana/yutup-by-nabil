@@ -5,19 +5,19 @@
 
 @section('content')
     
-
+@if ($data !== NULL)
 <div id="gallery" class="relative w-full" data-carousel="slide">
     <!-- Carousel wrapper -->
     <div class="relative h-56 overflow-hidden rounded-lg md:h-96">
          <!-- Item 1 -->
-         @if ($data !== NULL)
+         
          @foreach ($data as $d)
         <div class="hidden duration-700 ease-in-out flex text-center bg-white bg-opacity-60" data-carousel-item>
             <img src="{{ asset('storage/' . $d['image']) }}" class="absolute object-contain block max-w-full h-auto -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="">
             <p class="itim mt-n3 bg-white rounded-lg p-3 fixed align-bottom font-bold bottom-0">{{ $d['name'] }}</p>
         </div>
         @endforeach
-        @endif
+        
     </div>
     <!-- Slider controls -->
     <button type="button" class="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-prev>
@@ -37,6 +37,7 @@
         </span>
     </button>
 </div>
+@endif
         @if(session()->has('success'))
         <div id="success" class="w-auto rounded-xl min-w-fit px-5 py-2 grid grid-flow-row-dense justify-center align-middle self-center mx-auto bg-opacity-90 bg-green-700">
             <p class="itim">{{ session('success')}}</p>
@@ -74,7 +75,7 @@
         </div>
         @endif
         @auth
-        <button onclick="toggleSidebar('tambahProduk')" class="absolute right-3 bottom-10 p-2 rounded-lg bg-blue-700"><span class="material-icons">add</span></button>
+        <button onclick="toggleSidebar('tambahProduk')" class="absolute right-3 bottom-24 p-2 rounded-lg bg-blue-700"><span class="material-icons">add</span></button>
         @endauth
 
     <div id="tambahProduk" class="absolute hidden inset-0 z-999 flex items-center justify-center" style="z-index: 999;">
@@ -88,7 +89,7 @@
             <form action="{{ route('upload') }}" method="post" enctype="multipart/form-data">
                 @csrf
                 <label for="name" class="block text-gray-700 text-sm font-bold mb-2">Nama Produk:</label>
-                <input type="text" name="name" id="name" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+                <input type="text" name="name" id="name" autocomplete="off" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
 
                 <label for="image" class="block text-gray-700 text-sm font-bold mb-2 mt-4">Gambar Produk:</label>
                 <input type="file" name="image" id="image" accept="image/*" class="mb-4" required>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\produk;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -57,5 +58,17 @@ class EditController extends Controller
         $data->delete();
 
         return redirect('/Dashboard')->with('success', 'Data berhasil dihapus!');
+    }
+    public function destroyProduct(Request $request, $id) 
+    {
+        $data = produk::find($id);
+
+        if (!$data)
+        {
+            return redirect('/Dashboard/Product')->with('error', 'Gagal Menghapus Data! Data Tidak Ditemukan!');
+        }
+        $data->delete();
+
+        return redirect('/Dashboard/Product')->with('success', 'Data berhasil dihapus!');
     }
 }

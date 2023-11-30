@@ -8,7 +8,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Aplikasi Dashboard Nabil</title>
+        <title>@yield('title', 'Aplikasi Dashboard Nabil')</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
         <link rel="icon" type="image/x-icon" href="{{ asset('images/logo.png') }}">
@@ -21,7 +21,7 @@
     </head>
     <body class="bg-home">
         <nav class="h-12 lg:h-12 bg-white w-screen shadow-md flex items-center itim fixed">
-            <button onclick="toggleSidebar('default-sidebar')" class="flex items-center">
+            <button type="button" data-drawer-target="drawer-navigation" data-drawer-show="drawer-navigation" aria-controls="drawer-navigation" class="flex items-center">
                 <img src="{{ asset('images/logo.png')}}" alt="" class="icon h-8 w-8 ml-2">
                 <h1 class="title text-2xl text-center ml-2">Aplikasi Dashboard Nabil</h1>
             </button>
@@ -53,157 +53,148 @@
             </div>
         </div> -->
         </nav>
-        <aside id="default-sidebar" class="fixed hidden itim top-0 left-0 z-40 transition-width ease-in-out duration-300 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0" aria-label="Sidebar">
-            <div class="h-full overflow-hidden bg-gray-50 dark:bg-gray-800">
-            <ul class="space-y-2 font-medium">
-                <li>
-                    <img class="w-full h-auto relative p-0 m-0 top-0 left-0" src="{{ asset('images/screen4.jpg') }}">
-                    <p class="fixed mt-[-45px] text-white ml-2 font-bold">
+        
+        <!-- drawer component -->
+        <div id="drawer-navigation" class="fixed top-0 left-0 z-40 h-screen p-0 itim overflow-y-auto transition-transform -translate-x-full bg-white dark:bg-gray-800 w-72" tabindex="-1" aria-labelledby="drawer-navigation-label">
+                <img class="w-full h-auto relative p-0 m-0 top-0 left-0" src="{{ asset('images/screen4.jpg') }}">
+                <div class="fixed mt-[-125px] p-2">
+                    @auth
+                    <img src="{{ auth()->user()->profile_image }}" class="mb-2 object-contain w-16 h-16">
+                    @endauth
+                    <p class="text-white ml-0 font-bold">
                         @auth
                         {{ auth()->user()->name }}
                         @endauth
                     </p>
-                </li>
-                <li>
-                    <button onclick="toggleSidebar('default-sidebar')" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                        <svg class="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M13 5H1m0 0 4 4M1 5l4-4"/>
-                        </svg>
-                    </button>
-                </li>
-                <li>
+                    <p class="text-white ml-0 font-bold max-w-64 overflow-hidden">
+                        @auth
+                        Email :
+                        {{ auth()->user()->email }}
+                        @endauth
+                    </p>
+                </div>    
+                
+            <div class="overflow-y-auto">
+                <ul class="space-y-2 font-medium p-4">
+                    <li>
+                        <button type="button" data-drawer-hide="drawer-navigation" aria-controls="drawer-navigation" class="text-white bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 absolute top-2.5 end-2.5 inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white" >
+                            <span class="material-icons rotate-45">add</span>
+                        </button>
+                    </li>
+                    <li>
+                        <a href="/" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                            <i class="fa fa-home w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true"></i>
+                            <span class="ms-6">Home</span>
+                        </a>
+                    </li>
+                    <li>
+                        <button type="button" class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700" aria-controls="dropdown-example" data-collapse-toggle="dropdown-example">
+                              <svg class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 21">
+                                 <path d="M15 12a1 1 0 0 0 .962-.726l2-7A1 1 0 0 0 17 3H3.77L3.175.745A1 1 0 0 0 2.208 0H1a1 1 0 0 0 0 2h.438l.6 2.255v.019l2 7 .746 2.986A3 3 0 1 0 9 17a2.966 2.966 0 0 0-.184-1h2.368c-.118.32-.18.659-.184 1a3 3 0 1 0 3-3H6.78l-.5-2H15Z"/>
+                              </svg>
+                              <span class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">Dashboard</span>
+                              <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+                              </svg>
+                        </button>
+                        <ul id="dropdown-example" class="hidden py-2 space-y-2">
+                              <li>
+                                <a href="/Dashboard" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                                    <span class="material-icons w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true">
+                                    query_stats
+                                    </span>
+                                    <span class="ms-6">Dashboard</span>
+                                </a>
+                              </li>
+                              <li>
+                                <a href="/Dashboard/Product" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                                    <span class="material-icons w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true">
+                                    query_stats
+                                    </span>
+                                    <span class="ms-6">Dashboard Product</span>
+                                </a>
+                              </li>
+                        </ul>
+                     </li>
+                    <li>
+                        <a href="/School" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                            <span class="material-icons flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true"">
+                            school
+                            </span>
+                            <span class="flex-1 ms-6 whitespace-nowrap">K-One</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/RPL" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                            <span class="material-icons flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true">
+                            computer
+                            </span>
+                            <span class="flex-1 ms-6 whitespace-nowrap">RPL</span>
+                        </a>
+                    </li>
+                    <hr class="mx-1 my-1">
+                    <li>
+                        @auth
+                        <a href="/Profile" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                            <span class="material-icons flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true">
+                            emoji_emotions
+                            </span>
+                            <span class="flex-1 ms-6 whitespace-nowrap">Profile</span>
+                        </a>
+                        @endauth
+                    </li>
+                    <li>
+                        <a href="/About" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                            <span class="material-icons flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true">
+                            info
+                            </span>
+                            <span class="flex-1 ms-6 whitespace-nowrap">About</span>
+                        </a>
+                    </li>
+                    <hr class="mx-1 my-1">
+                    <li>
+                        
+                        @auth
+                        <a class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                            <span class="material-icons flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true">
+                            meeting_room
+                            </span>
+                            <form action="/Logout" method="post">
+                                @csrf
+                                <button type="submit" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">Logout</button>
+                            </form>
+                        </a>
+                        @else
+                        <a href="/Login" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                            <span class="material-icons flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true">
+                            door_front
+                            </span>
+                            <span class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">Login</span>
+                        </a>
+                        @endauth
+                        
+                    </li>
+                </ul>
+                </div>
+            </div>
+            
 
-                    <a href="/" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                        <i class="fa fa-home w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true"></i>
-                        <span class="ms-6">Home</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="/Dashboard" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                        <span class="material-icons w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true">
-                          query_stats
-                        </span>
-                        <span class="ms-6">Dashboard</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="/School" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                        <span class="material-icons flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true"">
-                        school
-                        </span>
-                        <span class="flex-1 ms-6 whitespace-nowrap">K-One</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                        <span class="material-icons flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true">
-                        computer
-                        </span>
-                        <span class="flex-1 ms-6 whitespace-nowrap">RPL</span>
-                    </a>
-                </li>
-                <hr class="mx-1 my-1">
-                <li>
-                    <a href="#" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                        <span class="material-icons flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true">
-                        emoji_emotions
-                        </span>
-                        <span class="flex-1 ms-6 whitespace-nowrap">Profile</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                        <span class="material-icons flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true">
-                        info
-                        </span>
-                        <span class="flex-1 ms-6 whitespace-nowrap">About</span>
-                    </a>
-                </li>
-                <hr class="mx-1 my-1">
-                <li>
-                    
-                    @auth
-                    <a class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                        <span class="material-icons flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true">
-                        meeting_room
-                        </span>
-                        <form action="/Logout" method="post">
-                            @csrf
-                            <button type="submit" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">Logout</button>
-                        </form>
-                    </a>
-                    @else
-                    <a href="/Login" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                        <span class="material-icons flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true">
-                        door_front
-                        </span>
-                        <span class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">Login</span>
-                    </a>
-                    @endauth
-                    
-                </li>
-            </ul>
-            </div>
-        </aside>
-            <div class="fixed ms-0 p-4 mt-14 w-full h-full overflow-y-auto">
-                @yield('content')
-            </div>
-            <div class="fixed z-50 w-full h-16 max-w-lg md:hidden lg:hidden -translate-x-1/2 bg-white border border-gray-200 rounded-full bottom-4 left-1/2 dark:bg-gray-700 dark:border-gray-600">
-    <div class="grid h-full max-w-lg grid-cols-5 mx-auto">
-        <button data-tooltip-target="tooltip-home" onclick="To('/')" type="button" class="inline-flex flex-col items-center justify-center px-5 rounded-s-full hover:bg-gray-50 dark:hover:bg-gray-800 group">
-            <svg class="w-5 h-5 mb-1 text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+        <ol class="inline-flex items-center mt-14 bg-white bg-opacity-60 ms-5 px-3 py-1 rounded-sm space-x-1 md:space-x-2 rtl:space-x-reverse">
+        <li class="inline-flex items-center">
+            <a href="/" class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-blue-600 dark:text-gray-400 dark:hover:text-white">
+            <svg class="w-3 h-3 me-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                 <path d="m19.707 9.293-2-2-7-7a1 1 0 0 0-1.414 0l-7 7-2 2a1 1 0 0 0 1.414 1.414L2 10.414V18a2 2 0 0 0 2 2h3a1 1 0 0 0 1-1v-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 0 1 1h3a2 2 0 0 0 2-2v-7.586l.293.293a1 1 0 0 0 1.414-1.414Z"/>
             </svg>
-            <span class="sr-only">Home</span>
-        </button>
-        <div id="tooltip-home" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
             Home
-            <div class="tooltip-arrow" data-popper-arrow></div>
+            </a>
+        </li>
+        @yield('breadscrumb')
+        </ol>
+  
+        
+        <div class="fixed ms-0 p-4 mt-0 w-full h-full overflow-y-hidden">
+            @yield('content')
         </div>
-        <button data-tooltip-target="tooltip-wallet" type="button" onclick="To('Dashboard')" class="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group">
-            <span class="material-icons w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true">
-                query_stats
-            </span>
-            <span class="sr-only">Dashboard</span>
-        </button>
-        <div id="tooltip-wallet" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
-            Dashboard
-            <div class="tooltip-arrow" data-popper-arrow></div>
-        </div>
-        <div class="flex items-center justify-center">
-            <button data-tooltip-target="tooltip-new" type="button" class="inline-flex items-center justify-center w-10 h-10 font-medium bg-blue-600 rounded-full hover:bg-blue-700 group focus:ring-4 focus:ring-blue-300 focus:outline-none dark:focus:ring-blue-800">
-                <svg class="w-4 h-4 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
-                </svg>
-                <span class="sr-only">New item</span>
-            </button>
-        </div>
-        <div id="tooltip-new" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
-            Create new item
-            <div class="tooltip-arrow" data-popper-arrow></div>
-        </div>
-        <button data-tooltip-target="tooltip-settings" type="button" class="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group">
-            <svg class="w-5 h-5 mb-1 text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 12.25V1m0 11.25a2.25 2.25 0 0 0 0 4.5m0-4.5a2.25 2.25 0 0 1 0 4.5M4 19v-2.25m6-13.5V1m0 2.25a2.25 2.25 0 0 0 0 4.5m0-4.5a2.25 2.25 0 0 1 0 4.5M10 19V7.75m6 4.5V1m0 11.25a2.25 2.25 0 1 0 0 4.5 2.25 2.25 0 0 0 0-4.5ZM16 19v-2"/>
-            </svg>
-            <span class="sr-only">Settings</span>
-        </button>
-        <div id="tooltip-settings" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
-            Settings
-            <div class="tooltip-arrow" data-popper-arrow></div>
-        </div>
-        <button data-tooltip-target="tooltip-profile" type="button" class="inline-flex flex-col items-center justify-center px-5 rounded-e-full hover:bg-gray-50 dark:hover:bg-gray-800 group">
-            <svg class="w-5 h-5 mb-1 text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                <path d="M10 0a10 10 0 1 0 10 10A10.011 10.011 0 0 0 10 0Zm0 5a3 3 0 1 1 0 6 3 3 0 0 1 0-6Zm0 13a8.949 8.949 0 0 1-4.951-1.488A3.987 3.987 0 0 1 9 13h2a3.987 3.987 0 0 1 3.951 3.512A8.949 8.949 0 0 1 10 18Z"/>
-            </svg>
-            <span class="sr-only">Profile</span>
-        </button>
-        <div id="tooltip-profile" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
-            Profile
-            <div class="tooltip-arrow" data-popper-arrow></div>
-        </div>
-    </div>
-</div>
         <script src="{{ asset('js/app.js') }}" async defer></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.js"></script>
     </body>
